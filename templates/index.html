@@ -12,12 +12,15 @@
 </head>
 <body>
     {% block nav %}{% include 'nav.html' %}{% endblock nav %}
-    <div class="container">
-        <div class="header">
-            <h1>Welcome to Chat App</h1>
-            <p>Connect with friends and start chatting instantly!</p>
+    <div class="outside">
+
+        <div class="container">
+            <div class="header">
+                <h1>Welcome to Chat App</h1>
+                <p>Connect with friends and start chatting instantly!</p>
+            </div>
+            <a href='{% url "login_page" %}'><button class="start-button">Start Chat</button></a>
         </div>
-        <a href='{% url "login_page" %}'><button class="start-button">Start Chat</button></a>
     </div>
     {% block footer %}{% include 'footer.html' %}{% endblock footer %}
 

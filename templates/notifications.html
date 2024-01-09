@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat-App</title>
+    <link rel="stylesheet" href='{% static "css/style.css" %}' />
+    <link rel="stylesheet" href='{% static "css/nav.css" %}' />
+    <link rel="stylesheet" href='{% static "css/footer.css" %}' />
+    <link rel="stylesheet" href='{% static "css/home.css" %}' />
+    <script src="{% static 'js/nav.js' %}" type="text/javascript"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    {% block nav %}{% include 'nav.html' %}{% endblock nav %}
+    <div class="outside">
+      <div class="container">
+        <div class="headerr">
+          <h2>Chaatty</h2>
+          <h4>@Username</h4>
+        </div>
+        <div class="navigation">
+          <a href="{% url "notifications" %}"><i class="fa-solid fa-bell"></i></a>
+          <a href="{% url "friend_request" %}"><i class="fa-solid fa-users"></i></a>
+          <a href="{% url "add_friend" %}"><i class="fa-solid fa-user-plus"></i></a>
+          <a href="{% url "setting" %}"><i class="fa-solid fa-gear"></i></a>
+          <a href=''><i class="fa-solid fa-right-from-bracket"></i></a>
+          <div class="users"></div>
+        </div>
+        <div class="chatcontainer">
+            <div class="head">
+              <h2>Chats</h2>
+              <p>You have 2 new Notifications</p>
+            </div>
+            <div class="chat-content">
+              <div class="users">
+                <div class="profile"></div>
+              </div>
+              <div class="other">
+                <div class="name-time">
+                    <p>Hi che accepted your friend request</p>
+
+                  <p>2 minute ago</p>
+                </div>
+                
+              </div>
+            </div>
+            <div class="chat-content">
+              <div class="users">
+                <div class="profile"></div>
+              </div>
+              <div class="other">
+                <div class="name-time">
+                  <p>Hi che accepted your friend request</p>
+                  <p>2 minute ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    {% block footer %}{% include 'footer.html' %}{% endblock footer %}
+  </body>
+</html>

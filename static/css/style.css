@@ -2,10 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #ffffff;
-    display: flex;
+    background-color: #f8f6f6;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     height: 100vh;
 }
 
@@ -13,10 +13,17 @@ body {
     text-align: center;
     background-color: #ffffff;
     padding: 40px;
+    width: 400px;
+height: 60vh;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
-
+.outside{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 78.9vh;
+}
 .header {
     margin-bottom: 30px;
 }
@@ -34,7 +41,7 @@ p {
 }
 
 .start-button {
-    background-color: #28a745;
+    background-color: #343434;
     color: #ffffff;
     padding: 15px 30px;
     font-size: 18px;
@@ -45,7 +52,7 @@ p {
 }
 
 .start-button:hover {
-    background-color: #218838;
+    background-color: #616668;
 }
 
 /* Optional: Add some additional styling for responsiveness */

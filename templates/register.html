@@ -13,35 +13,38 @@
 </head>
 <body class="">
     {% block nav %}{% include 'nav.html' %}{% endblock nav %}
-    <div class="container">
-        <form  method="post" class="register-form">
-            {% csrf_token %}
+    <div class="outside">
 
-            <h2>Register</h2>
-            <div class="register">
-                <div class="content">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" required>
+        <div class="container">
+            <form  method="post" class="register-form">
+                {% csrf_token %}
+                
+                <h2>Register</h2>
+                <div class="register">
+                    <div class="content">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="content">
+                        
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="content">
+                        
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="content">
+                        
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <button type="submit">Register</button>
                 </div>
-                <div class="content">
-
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="content">
-
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="content">
-
-                    <label for="confirm-password">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm-password" required>
-                </div>
-                <button type="submit">Register</button>
-            </div>
-            <p class="login-link">Already have an account? <a href="{% url "login_page" %}">Login</a></p>
-        </form>
+                <p class="login-link">Already have an account? <a href="{% url "login_page" %}">Login</a></p>
+            </form>
+        </div>
     </div>
     {% block footer %}{% include 'footer.html' %}{% endblock footer %}
 </body>
