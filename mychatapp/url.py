@@ -14,5 +14,6 @@ urlpatterns = [
     path('setting/',views.setting,name='setting'),
     path('notifications/',views.notifications,name='notifications'),
     path('home/chat/',views.chat,name='chat'),
+    path('logout/', views.logout_page,name='logout'),
     
 ]

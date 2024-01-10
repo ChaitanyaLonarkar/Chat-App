@@ -13,9 +13,20 @@
                 <li><a href="{% url "home" %}">Home</a></li>
                 <li><a href="#">Chat Rooms</a></li>
                 <li><a href="#">Contact</a></li>
-                <li class="login"><a href="{% url "login_page" %}">Login</a></li>
+                {% if request.user.is_authenticated %}
+
+                <li><a href="{% url "logout" %}">Logout</a></li>
+                <li class="icon">
+                    <i class="fa-solid fa-user"></i>
+                </li>
+                <li><h6>{{request.user}}</h6></li>
+                {% else %}
+                <li><a href="{% url "login_page" %}">Login</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
 
+
     <!-- Your chat application content goes here -->
+

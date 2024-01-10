@@ -20,8 +20,8 @@
     <div class="outside">
       <div class="container">
         <div class="headerr">
-          <h2>Chaatty</h2>
-          <h4>@Username</h4>
+          <h2>{{request.first_name}}</h2>
+          <h4>{{request.user}}</h4>
         </div>
         <div class="navigation">
           <a href="{% url "notifications" %}"><i class="fa-solid fa-bell"></i></a>
