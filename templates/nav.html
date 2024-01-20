@@ -14,12 +14,13 @@
                 <li><a href="#">Chat Rooms</a></li>
                 <li><a href="#">Contact</a></li>
                 {% if request.user.is_authenticated %}
-
                 <li><a href="{% url "logout" %}">Logout</a></li>
                 <li class="icon">
                     <i class="fa-solid fa-user"></i>
                 </li>
-                <li><h6>{{request.user}}</h6></li>
+                <h3 style="
+                    margin: 0px;"
+                >{{request.user}}</h3>
                 {% else %}
                 <li><a href="{% url "login_page" %}">Login</a></li>
                 {% endif %}

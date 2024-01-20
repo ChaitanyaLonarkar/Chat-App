@@ -1,15 +1,22 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-# from home.models import 
+from django.http import JsonResponse
+import json
+from mychatapp.form import UserProfileForm
+from .models import Profile,FriendRequest
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate ,login, logout
+from django.contrib.auth import authenticate ,login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     return render(request,'index.html')
 
 def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     if request.method=='POST':
         username=request.POST.get('username')
         password=request.POST.get('password')
@@ -31,6 +38,8 @@ def login_page(request):
     return render(request,'login.html')
 
 def register_page(request):
+    if request.user.is_authenticated:
+        return redirect('/home')
     if request.method=='POST':
         username=request.POST.get('username')
         password=request.POST.get('password')
@@ -62,15 +71,54 @@ def notifications(request):
 
 @login_required(login_url='/login')
 def add_friend(request):
-    return render(request,'add_friend.html')
+    all_user=get_user_model()
+    # all_user= User.objects.all()
+    profile, created = Profile.objects.get_or_create(user = request.user)
+    profile_friends=profile.friends.all()
+    suggested_friends= all_user.objects.exclude(userprofile__friends__in = profile_friends).exclude(userprofile = profile)
+    
+    # friend_requests=FriendRequest.objects.filter(receiver__in=suggested_friends,sender=request.user).first()
+    friend_requests=FriendRequest.objects.filter(receiver__in=suggested_friends,sender=request.user)
+    
+    # print(friend_requests)
+    context={"s_friends":suggested_friends,"f_friends":friend_requests}
+    return render(request,'add_friend.html',context)
 
 @login_required(login_url='/login')
 def friend_request(request):
     return render(request,'friend_request.html')
 
 @login_required(login_url='/login')
-def setting(request):
+def update_profile(request):
+    # user=request.user
+    # print(user)
+    # profile=Profile.objects.get(user=user)
+    # print(profile)
+    # form = UserProfileForm(instance=profile)
+    # profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    # if request.method == 'POST':
+    #     form = UserProfileForm(request.POST, request.FILES, instance=profile)
+
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('update_profile')  # Redirect to the same page after successful update
+    # else:
+    #     form = UserProfileForm(instance=profile)
+        
+    # context={'form':form}
+    
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    # print(profile)
+    if request.method == 'POST':
+        profile.username=request.POST.get('username')
+        profile.first_name=request.POST.get('firstname')
+        profile.last_name=request.POST.get('lastname')
+        profile.profile_picture=request.POST.get('profile_picture')
+        profile.save()
+        return redirect('update_profile')  
     return render(request,'update.html')
+
 
 @login_required(login_url='/login')
 def chat(request):
@@ -81,3 +129,12 @@ def chat(request):
 def logout_page(request):
     logout(request)
     return redirect('/login')
+
+@login_required(login_url='/login')
+def send_friend_request(request):
+    data =json.loads(request.body)
+    # user_id=data['id']
+    user=get_user_model()
+    receiver=User.objects.get(id=data)
+    friend_request=FriendRequest.objects.create(sender=request.user,receiver=receiver)
+    return JsonResponse('chat',safe=False)

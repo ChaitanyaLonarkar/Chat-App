@@ -11,9 +11,11 @@ urlpatterns = [
     path('home/',views.home,name='home'),
     path('add_friend/',views.add_friend,name='add_friend'),
     path('friend_request/',views.friend_request,name='friend_request'),
-    path('setting/',views.setting,name='setting'),
+    path('update_profile/',views.update_profile,name='update_profile'),
     path('notifications/',views.notifications,name='notifications'),
     path('home/chat/',views.chat,name='chat'),
     path('logout/', views.logout_page,name='logout'),
+    path('send_request/', views.send_friend_request,name='send_request'),
+    
     
 ]
