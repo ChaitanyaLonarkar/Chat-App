@@ -56,13 +56,31 @@
     {% block footer %}{% include 'footer.html' %}{% endblock footer %}
   </body>
   <script>
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    
     let cnfbtn=document.querySelectorAll('.conform-btn')
 
     for (let btn of cnfbtn){
       btn.addEventListener('click',addFriend)
     }  
     async function postJSON(data,btn) {
-      let url="{% url 'send_request' %}"
+      let url="{% url 'accept_request' %}"
       try {
         const response = await fetch(url, {
           method: "POST", 
@@ -75,7 +93,11 @@
     
         const result = await response.json();
         console.log("Success:", result);
-        
+        if (result=="yes"){
+          btn.innerText="Confirmed"
+          btn.classList.add("disable")
+          btn.nextElementSibling.classList.add("disable")
+        }
       } 
       catch (error) {
         console.error("Error:", error);
@@ -85,7 +107,8 @@
     function addFriend(e){
       console.log(e.target)
       const data = e.target.dataset.id
-      postJSON(data);
+      let btn = e.target
+      postJSON(data,btn);
     }
 
   </script>

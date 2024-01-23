@@ -145,5 +145,21 @@ def send_friend_request(request):
 def accept_friend_request(request):
     data =json.loads(request.body)
     user=get_user_model()
-    receiver=user.objects.get(id=data)
-    return JsonResponse('it is working',safe=False)
+    n_user=user.objects.get(id=data)
+    profile=Profile.objects.get(user_id=request.user.id)
+    msg=None
+    profile2=Profile.objects.get(user_id=data)
+    if profile:
+        if profile.friends.filter(id=data).exists():
+            profile.friends.remove(n_user)
+            msg="no"
+        else:
+            profile.friends.add(n_user)
+            msg="yes"
+            
+    if profile2:
+        if profile2.friends.filter(id=request.user.id).exists():
+            profile2.friends.remove(request.user)
+        else:
+            profile2.friends.add(request.user)
+    return JsonResponse(msg,safe=False)

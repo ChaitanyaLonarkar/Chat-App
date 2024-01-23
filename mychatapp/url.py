@@ -16,6 +16,6 @@ urlpatterns = [
     path('home/chat/',views.chat,name='chat'),
     path('logout/', views.logout_page,name='logout'),
     path('send_request/', views.send_friend_request,name='send_request'),
-    
+    path('accept_request/', views.accept_friend_request,name='accept_request'),
     
 ]
