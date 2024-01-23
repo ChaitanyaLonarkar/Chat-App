@@ -51,11 +51,11 @@
                        <h3>{{ friend.username }}</h3>
                        <p>200 followers</p>
                       <!-- below line is used for a request is send and when page is refresh then we want the buttons are dsable already once the request is sent  then we use this lines and also related to custom.filter file-->
-                       {% if friend.id|if_id_in_queryset:f_request %}
+                       {% if friend.id|my_custom_filter:f_friends %}
 
                        <div class="btns">
-                        <button class="button add_req disable" data-id={{friend.id}}>Request sent</button>
-                        <button class="button remove" data-id={{friend.id}}>Cancel request</button>
+                        <button class="button add_req disable" data-id={{friend.id}}>Request Sent</button>
+                        <button class="button remove" data-id={{friend.id}}>Cancel Request</button>
                        </div>
                        {% else %}
 

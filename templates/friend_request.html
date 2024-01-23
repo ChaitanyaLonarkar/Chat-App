@@ -21,7 +21,7 @@
       <div class="container">
         <div class="headerr">
           <h2>Chaatty</h2>
-          <h4>@Username</h4>
+          <h4>@{{request.user}}</h4>
         </div>
         <div class="navigation">
             <a href="{% url "notifications" %}"><i class="fa-solid fa-bell"></i></a>
@@ -33,34 +33,60 @@
           </div>
         <div class="suggestion">
           <div class="user-sug">
-            <h3>Username | Friend Requests</h3>
+            <h3>{{request.user}} | Friend Requests</h3>
             <p>You have freind new Requests</p>
           </div>
+          {% for f_request in f_friends %}
           <div class="new-friend">
             <div class="users"></div>
             <div class="otherr">
-              <h3>username</h3>
+              <h3>{{f_request.sender.username}}</h3>
               <p>200 followers</p>
               <div class="btns">
-                <button class="button">Conform</button>
-                <button class="button">Delete</button>
+                <button class="button conform-btn" data-id={{f_request.sender.id}}>Conform</button>
+                <button class="button delete-btn">Delete</button>
               </div>
             </div>
           </div>
-          <div class="new-friend">
-            <div class="users"></div>
-            <div class="otherr">
-              <h3>username</h3>
-              <p>200 followers</p>
-              <div class="btns">
-                <button class="button">Conform</button>
-                <button class="button">Delete</button>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
+          
         </div>
       </div>
     </div>
     {% block footer %}{% include 'footer.html' %}{% endblock footer %}
   </body>
+  <script>
+    let cnfbtn=document.querySelectorAll('.conform-btn')
+
+    for (let btn of cnfbtn){
+      btn.addEventListener('click',addFriend)
+    }  
+    async function postJSON(data,btn) {
+      let url="{% url 'send_request' %}"
+      try {
+        const response = await fetch(url, {
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify(data),
+        });
+    
+        const result = await response.json();
+        console.log("Success:", result);
+        
+      } 
+      catch (error) {
+        console.error("Error:", error);
+        console.log("sjhdfjksd")
+      }
+    }
+    function addFriend(e){
+      console.log(e.target)
+      const data = e.target.dataset.id
+      postJSON(data);
+    }
+
+  </script>
 </html>

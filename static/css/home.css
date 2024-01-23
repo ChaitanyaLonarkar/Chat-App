@@ -3,10 +3,11 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid rgba(156, 156, 156, 0.5);
-  height: 50px;
+  height: 35px;
 }
-.headerr h2 {
+.headerr h2 ,.headerr h4 {
   /* align-items: center; */
+  margin-bottom: 5px;
   margin-top: 0px;
 }
 .navigation {
@@ -97,11 +98,12 @@
 }
 .suggestion{
   overflow-y: scroll; 
-  height:290px;
+  height:305px;
 }
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  
 }
 
 /* Track */

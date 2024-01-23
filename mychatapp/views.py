@@ -86,7 +86,10 @@ def add_friend(request):
 
 @login_required(login_url='/login')
 def friend_request(request):
-    return render(request,'friend_request.html')
+    user=request.user
+    friend_request=FriendRequest.objects.filter(receiver=user)
+    context={"f_friends":friend_request}
+    return render(request,'friend_request.html',context)
 
 @login_required(login_url='/login')
 def update_profile(request):
@@ -133,8 +136,14 @@ def logout_page(request):
 @login_required(login_url='/login')
 def send_friend_request(request):
     data =json.loads(request.body)
-    # user_id=data['id']
     user=get_user_model()
-    receiver=User.objects.get(id=data)
+    receiver=user.objects.get(id=data)
     friend_request=FriendRequest.objects.create(sender=request.user,receiver=receiver)
     return JsonResponse('chat',safe=False)
+
+# @login_required(login_url='/login')
+def accept_friend_request(request):
+    data =json.loads(request.body)
+    user=get_user_model()
+    receiver=user.objects.get(id=data)
+    return JsonResponse('it is working',safe=False)
